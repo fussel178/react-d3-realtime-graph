@@ -1,0 +1,53 @@
+name: Release
+
+# Events that trigger this workflow
+on: workflow_dispatch
+
+jobs:
+  build-and-release:
+    name: Build and release application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 📥
+        uses: actions/checkout@v2.3.4
+      - name: Setup Node 💿
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14
+
+      # Remove, when setup-node action supports specifying the node version
+      - name: Install npm v7 ⬆
+        run: npm install --global npm@v7
+
+      - name: Install development dependencies 📚
+        run: npm ci
+
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3.7.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          release-count: '0'
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
+
+      - name: Build application 🛠️
+        run: |
+          npm run build
+          zip -r build.zip build/*
+
+      - name: Upload build as release asset 📤
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        uses: svenstaro/upload-release-action@2.2.1
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.changelog.outputs.tag }}
+          file: ./build.zip
