@@ -1,4 +1,4 @@
 export interface DataSample {
-    value: number;
-    timeStamp: number;
+	value: number;
+	timeStamp: number;
 }

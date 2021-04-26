@@ -1,5 +1,5 @@
 // edit to your preference
-import {randNum} from "./random";
+import { randNum } from './random';
 
 const MIN = 0; // absolute value
 const MAX = 10; // absolute value
@@ -22,39 +22,41 @@ let max = MIDDLE + MIDDLE / 2; // 75%
 let lastCall: Date | undefined = undefined;
 
 export function genFakeData() {
-    const thisCall = new Date();
-    const timeStep = lastCall ? (thisCall.getTime() - lastCall.getTime()) / 1_000 : 0; // seconds
-    lastCall = thisCall;
-    // calculate new slope
-    const slope = randNum(0, MAX_SLOPE);
+	const thisCall = new Date();
+	const timeStep = lastCall
+		? (thisCall.getTime() - lastCall.getTime()) / 1_000
+		: 0; // seconds
+	lastCall = thisCall;
+	// calculate new slope
+	const slope = randNum(0, MAX_SLOPE);
 
-    // calculate new direction
-    const probability = ((avg - MIDDLE) / MIDDLE) * (direction ? +1 : -1); // range: [-1, +1] or [+1, -1]
-    if (probability > tippingPoint) {
-        direction = !direction;
-        tippingPoint = Math.random();
-    }
+	// calculate new direction
+	const probability = ((avg - MIDDLE) / MIDDLE) * (direction ? +1 : -1); // range: [-1, +1] or [+1, -1]
+	if (probability > tippingPoint) {
+		direction = !direction;
+		tippingPoint = Math.random();
+	}
 
-    //console.log({ slope, probability, tippingPoint, direction });
+	//console.log({ slope, probability, tippingPoint, direction });
 
-    // calculate new
-    avg += slope * (direction ? +1 : -1) * timeStep;
-    min += slope * (direction ? +1 : -1) * timeStep;
-    max += slope * (direction ? +1 : -1) * timeStep;
+	// calculate new
+	avg += slope * (direction ? +1 : -1) * timeStep;
+	min += slope * (direction ? +1 : -1) * timeStep;
+	max += slope * (direction ? +1 : -1) * timeStep;
 
-    //console.log({ avg, min, max, minDiff: avg - min, maxDiff: max - avg });
+	//console.log({ avg, min, max, minDiff: avg - min, maxDiff: max - avg });
 
-    // static noise
-    const avgNoise = randNum(-PERCENTILE, +PERCENTILE); // randNum(avg - PERCENTILE, avg + PERCENTILE);
-    const minNoise = randNum(-PERCENTILE, +PERCENTILE);
-    const maxNoise = randNum(-PERCENTILE, +PERCENTILE);
+	// static noise
+	const avgNoise = randNum(-PERCENTILE, +PERCENTILE); // randNum(avg - PERCENTILE, avg + PERCENTILE);
+	const minNoise = randNum(-PERCENTILE, +PERCENTILE);
+	const maxNoise = randNum(-PERCENTILE, +PERCENTILE);
 
-    //console.log({avgNoise, minNoise, maxNoise});
+	//console.log({avgNoise, minNoise, maxNoise});
 
-    return {
-        avg: avg + avgNoise,
-        min: min + minNoise,
-        max: max + maxNoise,
-        timestamp: thisCall
-    };
+	return {
+		avg: avg + avgNoise,
+		min: min + minNoise,
+		max: max + maxNoise,
+		timestamp: thisCall
+	};
 }

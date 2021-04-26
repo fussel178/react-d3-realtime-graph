@@ -1,3 +1,1 @@
-export function useD3Updater() {
-
-}
+export function useD3Updater() {}
