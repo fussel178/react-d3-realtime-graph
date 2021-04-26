@@ -125,7 +125,7 @@ export function PGraph({ width, height }: PGraphProps) {
 			//console.log(data.current);
 		}, 33.3333 / 2);
 		return () => clearInterval(id);
-	}, []);
+	}, [node]);
 
 	return <div ref={element} />;
 }

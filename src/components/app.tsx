@@ -1,4 +1,4 @@
-import { MovingText } from './moving-text/moving-text';
+// import { MovingText } from './moving-text/moving-text';
 import { PGraph } from './p-graph/p-graph';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
@@ -137,5 +137,5 @@ export function App() {
 		</div>
 	);
 
-	return <MovingText />;
+	// return <MovingText />;
 }
