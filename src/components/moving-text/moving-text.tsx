@@ -41,8 +41,8 @@ function createNode(width: number): ExtendedSVGSVGElement {
 						)
 				)
 				.call(text =>
-					// @ts-ignore
 					text
+						// @ts-ignore
 						.transition(t)
 						.attr('y', 17)
 						.attr('x', (d, i) => i * 20)
