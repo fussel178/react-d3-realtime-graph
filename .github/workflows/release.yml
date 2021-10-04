@@ -24,7 +24,7 @@ jobs:
 
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3.7.1
+        uses: TriPSs/conventional-changelog-action@v3.8.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           release-count: '0'
