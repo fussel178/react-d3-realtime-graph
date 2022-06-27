@@ -33,7 +33,7 @@
 		"@types/react-dom": "18.0.5",
 		"@types/react-virtualized-auto-sizer": "1.0.1",
 		"eslint-config-prettier": "8.5.0",
-		"eslint-plugin-prettier": "4.0.0",
+		"eslint-plugin-prettier": "4.1.0",
 		"prettier": "2.7.1",
 		"react-scripts": "5.0.1",
 		"rimraf": "3.0.2",
